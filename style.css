@@ -1,0 +1,47 @@
+body {
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#map {
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#logo {
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  z-index: 1;
+  font-size: xx-large;
+  font-style: italic;
+}
+
+#footer1 {
+  left: 3px;
+  bottom: 4.5em;
+  position: absolute;
+  z-index: 1;
+  font-size: smaller;
+}
+
+#footer2 {
+  left: 3px;
+  bottom: 3em;
+  position: absolute;
+  z-index: 1;
+  font-size: smaller;
+}
+
+a {
+  color: blue;
+}
+
+.olPopup {
+  border: 1px solid black;
+}
