@@ -38,6 +38,14 @@ body {
   font-size: smaller;
 }
 
+#footer3 {
+  left: 3px;
+  bottom: 1.5em;
+  position: absolute;
+  z-index: 1;
+  font-size: smaller;
+}
+
 a {
   color: blue;
 }
