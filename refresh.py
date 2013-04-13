@@ -2,6 +2,7 @@
 import urllib
 import urllib2
 from lxml import etree
+import os
 
 data = {'data': '<query type="node"><has-kv k="payment:bitcoin" v="yes"/></query><print/>'}
 req = urllib2.Request('http://www.overpass-api.de/api/interpreter', urllib.urlencode(data))
@@ -9,7 +10,9 @@ f = urllib2.urlopen(req)
 tree = etree.parse(f)
 f.close()
 
-with open('coinmap.txt', 'w') as f:
+scriptdir = os.path.dirname(os.path.abspath(__file__))
+
+with open(scriptdir + '/coinmap.txt', 'w') as f:
   f.write('lat\tlon\ttitle\tdescription\ticonSize\ticonOffset\ticon\n')
   for e in tree.findall('node'):
     lat = e.get('lat')
