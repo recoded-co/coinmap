@@ -1,22 +1,12 @@
 function coinmap() {
-  var map = new OpenLayers.Map('map', {
-    maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-      numZoomLevels: 19,
-      maxResolution: 156543.0399,
-      units: 'm',
-      projection: new OpenLayers.Projection("EPSG:900913"),
-      displayProjection: new OpenLayers.Projection("EPSG:4326")
-  });
+  var map = L.map('map').setView([0, 0], 3);
 
-  var layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
-  map.addLayers([layerMapnik]);
+  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+    maxZoom: 18
+  }).addTo(map);
 
-  var bitcoin = new OpenLayers.Layer.Text("Bitcoin", { location: "coinmap.txt", projection: map.displayProjection });
-  map.addLayer(bitcoin);
+  map.locate({setView: true, maxZoom: 6});
 
-  map.removeControl(map.controls[1]); // remove simple zoom buttons
-  map.addControl(new OpenLayers.Control.PanZoomBar());
-
-  var lonLat = new OpenLayers.LonLat(0,0).transform(map.displayProjection, map.projection);
-  map.setCenter(lonLat, 0);
+  coinmap_populate(map);
 }

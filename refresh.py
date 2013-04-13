@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import urllib
 import urllib2
-from lxml import etree
+import simplejson
 import os
 
 icon_mapping = {
@@ -58,7 +58,7 @@ icon_mapping = {
 'amenity:townhall': 'amenity_town_hall',
 'amenity:university': 'education_university',
 'amenity:vending_machine': 'shopping_vending_machine',
-'amenity:veterinary': 'health_veterinary.n.8E74',
+'amenity:veterinary': 'health_veterinary',
 'amenity:waste_basket': 'amenity_waste_bin',
 'barrier:block': 'barrier_bloc',
 'barrier:bollard': 'barrier_bollard',
@@ -169,55 +169,41 @@ icon_mapping = {
 }
 
 def determine_icon(tags):
-  icon = None
+  icon = 'bitcoin'
   for kv in icon_mapping:
     k,v = kv.split(':')
     if tags.get(k) == v:
       icon = icon_mapping[kv]
       break
-  if icon:
-    return 'icons/%s.n.24.png' % icon
-  else:
-    return 'bitcoin.png'
-
-data = {'data': '<query type="node"><has-kv k="payment:bitcoin" v="yes"/></query><print/>'}
-req = urllib2.Request('http://www.overpass-api.de/api/interpreter', urllib.urlencode(data))
-f = urllib2.urlopen(req)
-tree = etree.parse(f)
-f.close()
+  icon = icon.replace('-', '_')
+  return icon
 
 scriptdir = os.path.dirname(os.path.abspath(__file__))
 
-with open(scriptdir + '/coinmap.txt', 'w') as f:
-  f.write('lat\tlon\ttitle\tdescription\ticonSize\ticonOffset\ticon\n')
-  for e in tree.findall('node'):
-    lat = e.get('lat')
-    lon = e.get('lon')
-    tags = {}
-    for i in list(e):
-      tags[i.get('k')] = i.get('v')
+f = urllib2.urlopen('http://overpass.osm.rambler.ru/cgi/interpreter?data=[out:json];node["payment:bitcoin"=yes];out;')
+json = simplejson.load(f)
+f.close()
+
+with open(scriptdir + '/coinmap-data.js', 'w') as f:
+  f.write('function coinmap_populate(map) {\n')
+  f.write('  var m;\n')
+  for e in json['elements']:
+    lat = e['lat']
+    lon = e['lon']
+    tags = e['tags']
     if 'name' in tags:
-      title = tags['name']
+      name = tags['name']
     else:
-      title = 'node#%d' % i.get('id')
-    desc = ''
-    desc += '%s %s<br/>' % (tags.get('addr:street', ''), tags.get('addr:housenumber', ''))
-    desc += '%s %s<br/>' % (tags.get('addr:postcode', ''), tags.get('addr:city', ''))
-    desc += '%s<br/>' % (tags.get('addr:country', ''))
-    if 'website' in tags:
-      desc += '<a href="%s">%s</a>' % (tags['website'], tags['website'])
+      name = 'node#' + e['id']
     icon = determine_icon(tags)
-    f.write(lat)
-    f.write('\t')
-    f.write(lon)
-    f.write('\t')
-    f.write(title.encode('utf-8'))
-    f.write('\t')
-    f.write(desc.encode('utf-8'))
-    f.write('\t')
-    f.write('24,24') # iconSize
-    f.write('\t')
-    f.write('-12,-12') # iconOffset
-    f.write('\t')
-    f.write(icon)
-    f.write('\n')
+    popup = '<b>%s</b><hr/>' % name
+    if 'addr:street' in tags:
+      popup += '%s %s<br/>' % (tags.get('addr:street', ''), tags.get('addr:housenumber', ''))
+    if 'addr:city' in tags:
+      popup += '%s %s<br/>' % (tags.get('addr:postcode', ''), tags.get('addr:city', ''))
+    if 'addr:country' in tags:
+      popup += '%s<br/>' % (tags.get('addr:country', ''))
+    if 'website' in tags:
+      popup += '<a href=\\"%s\\">%s</a>' % (tags['website'], tags['website'])
+    f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(map);\n' % (lat, lon, name, icon, popup.encode('utf-8')))
+  f.write('}\n')

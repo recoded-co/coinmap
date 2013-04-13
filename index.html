@@ -1,18 +1,26 @@
 <html>
 <head>
+<title>CoinMap</title>
+<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+<![endif]-->
+<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
+<script src="coinmap.js"></script>
+<script src="coinmap-icons.js"></script>
+<script src="coinmap-data.js"></script>
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" type="image/png" href="bitcoin.png" />
-<title>CoinMap</title>
 <meta name="bitcoin" content="1HGub51H32YhUFw4zysMoTazBs88kWJJud" />
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
-<script src="coinmap.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 <body onload="coinmap()">
 <div id="logo">CoinMap</div>
 <div id="map"></div>
-<div id="footer1">If you don't see your place here, head to <a href="http://www.openstreetmap.org/edit">OpenStreetMap editor</a> and add <strong>payment:bitcoin=yes</strong> tag to your venue.</div>
-<div id="footer2">Venue data are updated every 10 minutes.</div>
-<div id="footer3">Donations are welcome at <a href="bitcoin:1HGub51H32YhUFw4zysMoTazBs88kWJJud">1HGub51H32YhUFw4zysMoTazBs88kWJJud</a></div>
+<div id="footer">If you don't see your place here, head to <a href="http://www.openstreetmap.org/edit">OpenStreetMap editor</a> and add <strong>payment:bitcoin=yes</strong> tag to your venue.<br/>
+Venue data are updated every 10 minutes.<br/>
+Donations are welcome at <a href="bitcoin:1HGub51H32YhUFw4zysMoTazBs88kWJJud">1HGub51H32YhUFw4zysMoTazBs88kWJJud</div>
 </body>
 </html>
