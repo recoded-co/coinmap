@@ -186,7 +186,6 @@ f.close()
 
 with open(scriptdir + '/coinmap-data.js', 'w') as f:
   f.write('function coinmap_populate(map) {\n')
-  f.write('  var m;\n')
   for e in json['elements']:
     lat = e['lat']
     lon = e['lon']
