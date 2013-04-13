@@ -30,6 +30,13 @@ with open(scriptdir + '/coinmap.txt', 'w') as f:
     desc += '%s<br/>' % (tags.get('addr:country', ''))
     if 'website' in tags:
       desc += '<a href="%s">%s</a>' % (tags['website'], tags['website'])
+    icon = 'bitcoin'
+    if tags.get('shop') == 'jewelry':
+      icon = 'icons/shopping_jewelry2.n.24'
+    if tags.get('shop') == 'bicycle':
+      icon = 'icons/shopping_bicycle.n.24'
+    if tags.get('tourism') == 'hotel':
+      icon = 'icons/accommodation_hotel.n.24'
     f.write(lat)
     f.write('\t')
     f.write(lon)
@@ -42,5 +49,5 @@ with open(scriptdir + '/coinmap.txt', 'w') as f:
     f.write('\t')
     f.write('-12,-12') # iconOffset
     f.write('\t')
-    f.write('bitcoin.png') #icon
+    f.write('%s.png' % icon)
     f.write('\n')
