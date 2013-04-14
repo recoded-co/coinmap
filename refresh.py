@@ -179,7 +179,7 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
     else:
       name = 'node#' + e['id']
     icon = determine_icon(tags)
-    popup = '<b>%s</b><hr/>' % name
+    popup = '<b>%s</b> <a href=\\"http://openstreetmap.org/browse/node/%s\\" target=\\"_blank\\">*</a><hr/>' % (name, e['id'])
     if 'addr:street' in tags:
       popup += '%s %s<br/>' % (tags.get('addr:street', ''), tags.get('addr:housenumber', ''))
     if 'addr:city' in tags:
@@ -187,7 +187,7 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
     if 'addr:country' in tags:
       popup += '%s<br/>' % (tags.get('addr:country', ''))
     if 'website' in tags:
-      popup += '<a href=\\"%s\\">%s</a>' % (tags['website'], tags['website'])
+      popup += '<a href=\\"%s\\" target=\\"_blank\\">%s</a>' % (tags['website'], tags['website'])
     f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(map);\n' % (lat, lon, name.encode('utf-8'), icon, popup.encode('utf-8')))
   f.write('  document.getElementById("count").innerHTML = "<b>%d</b>";\n' % len(json['elements']));
   f.write('}\n')
