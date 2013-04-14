@@ -24,7 +24,11 @@ function coinmap() {
     "Toner": tileToner,
   }).addTo(map);
 
-  map.locate({setView: true, maxZoom: 6});
+  var markers = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 32});
 
-  coinmap_populate(map);
+  coinmap_populate(markers);
+
+  map.addLayer(markers);
+
+  map.locate({setView: true, maxZoom: 6});
 }
