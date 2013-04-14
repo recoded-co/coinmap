@@ -164,22 +164,39 @@ def determine_icon(tags):
 
 scriptdir = os.path.dirname(os.path.abspath(__file__))
 
-f = urllib2.urlopen('http://overpass.osm.rambler.ru/cgi/interpreter?data=[out:json];node["payment:bitcoin"=yes];out;')
+f = urllib2.urlopen('http://overpass.osm.rambler.ru/cgi/interpreter?data=[out:json];(node["payment:bitcoin"=yes];way["payment:bitcoin"=yes];>;);out;')
 json = simplejson.load(f)
 f.close()
+
+nodes = {}
 
 with open(scriptdir + '/coinmap-data.js', 'w') as f:
   f.write('function coinmap_populate(markers) {\n')
   for e in json['elements']:
-    lat = e['lat']
-    lon = e['lon']
-    tags = e['tags']
+    lat = e.get('lat', None)
+    lon = e.get('lon', None)
+    typ = e['type']
+    tags = e.get('tags', {})
+    ide = e['id']
+
+    if typ == 'node':
+      nodes[ide] = (lat,lon)
+      if tags.get('payment:bitcoin') != 'yes': # nodes that are part of way (i.e. not accepting bitcoin)
+        continue
+
+    if typ == 'way':
+      lat, lon = nodes[e['nodes'][0]] # extract coordinate of first node
+
+    if not lat or not lon:
+      continue
+
     if 'name' in tags:
       name = tags['name']
     else:
-      name = 'node#' + e['id']
+      name = '%s %s' % (typ, ide)
+
     icon = determine_icon(tags)
-    popup = '<b>%s</b> <a href=\\"http://openstreetmap.org/browse/node/%s\\" target=\\"_blank\\">*</a><hr/>' % (name, e['id'])
+    popup = '<b>%s</b> <a href=\\"http://openstreetmap.org/browse/%s/%s\\" target=\\"_blank\\">*</a><hr/>' % (name, typ, ide)
     if 'addr:street' in tags:
       popup += '%s %s<br/>' % (tags.get('addr:street', ''), tags.get('addr:housenumber', ''))
     if 'addr:city' in tags:
