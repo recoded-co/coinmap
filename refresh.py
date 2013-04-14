@@ -206,8 +206,18 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
       popup += '%s %s<br/>' % (tags.get('addr:postcode', ''), tags.get('addr:city', ''))
     if 'addr:country' in tags:
       popup += '%s<br/>' % (tags.get('addr:country', ''))
-    if 'website' in tags:
-      popup += '<a href=\\"%s\\" target=\\"_blank\\">%s</a>' % (tags['website'], tags['website'])
+    if 'contact:website' in tags:
+      popup += '<a href=\\"%s\\" target=\\"_blank\\">%s</a><br/>' % (tags['contact:website'], tags['contact:website'])
+    elif 'website' in tags:
+      popup += '<a href=\\"%s\\" target=\\"_blank\\">%s</a><br/>' % (tags['website'], tags['website'])
+    if 'contact:email' in tags:
+      popup += '<a href=\\"mailto:%s\\" target=\\"_blank\\">%s</a><br/>' % (tags['contact:email'], tags['contact:email'])
+    elif 'email' in tags:
+      popup += '<a href=\\"mailto:%s\\" target=\\"_blank\\">%s</a><br/>' % (tags['email'], tags['email'])
+    if 'contact:phone' in tags:
+      popup += 'phone: %s<br/>' % (tags['contact:phone'])
+    elif 'phone' in tags:
+      popup += 'phone: %s<br/>' % (tags['phone'])
     f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(markers);\n' % (lat, lon, name.encode('utf-8'), icon, popup.encode('utf-8')))
   f.write('  document.getElementById("count").innerHTML = "<b>%d</b>";\n' % cnt);
   f.write('}\n')
