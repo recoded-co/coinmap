@@ -204,5 +204,5 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
       popup += '%s<br/>' % (tags.get('addr:country', ''))
     if 'website' in tags:
       popup += '<a href=\\"%s\\">%s</a>' % (tags['website'], tags['website'])
-    f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(map);\n' % (lat, lon, name, icon, popup.encode('utf-8')))
+    f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(map);\n' % (lat, lon, name.encode('utf-8'), icon, popup.encode('utf-8')))
   f.write('}\n')
