@@ -169,6 +169,7 @@ json = simplejson.load(f)
 f.close()
 
 nodes = {}
+cnt = 0
 
 with open(scriptdir + '/coinmap-data.js', 'w') as f:
   f.write('function coinmap_populate(markers) {\n')
@@ -190,6 +191,8 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
     if not lat or not lon:
       continue
 
+    cnt += 1
+
     if 'name' in tags:
       name = tags['name']
     else:
@@ -206,5 +209,5 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
     if 'website' in tags:
       popup += '<a href=\\"%s\\" target=\\"_blank\\">%s</a>' % (tags['website'], tags['website'])
     f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(markers);\n' % (lat, lon, name.encode('utf-8'), icon, popup.encode('utf-8')))
-  f.write('  document.getElementById("count").innerHTML = "<b>%d</b>";\n' % len(json['elements']));
+  f.write('  document.getElementById("count").innerHTML = "<b>%d</b>";\n' % cnt);
   f.write('}\n')
