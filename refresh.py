@@ -189,4 +189,5 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
     if 'website' in tags:
       popup += '<a href=\\"%s\\">%s</a>' % (tags['website'], tags['website'])
     f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(map);\n' % (lat, lon, name.encode('utf-8'), icon, popup.encode('utf-8')))
+  f.write('  document.getElementById("count").innerHTML = "<b>%d</b>";\n' % len(json['elements']));
   f.write('}\n')
