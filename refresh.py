@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import cgi
 import urllib
 import urllib2
 import simplejson
@@ -178,6 +179,8 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
     lon = e.get('lon', None)
     typ = e['type']
     tags = e.get('tags', {})
+    for k in tags.keys():
+        tags[k] = cgi.escape(tags[k]).replace('"', '\\"')
     ide = e['id']
 
     if typ == 'node':
