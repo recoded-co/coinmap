@@ -23,7 +23,7 @@ function coinmap() {
   });
 
 
-  var map = L.map('map', { zoom: 3, layers: [tileOSM] });
+  var map = L.map('map', { center: [0, 0], zoom: 3, layers: [tileOSM] });
 
   L.control.layers({
     "OpenStreetMap": tileOSM,
@@ -38,5 +38,5 @@ function coinmap() {
 
   map.addLayer(markers);
 
-/*  map.locate({setView: true, maxZoom: 6}); */
+  map.locate({setView: true, maxZoom: 6});
 }
