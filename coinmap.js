@@ -38,5 +38,5 @@ function coinmap() {
 
   map.addLayer(markers);
 
-  map.locate({setView: true, maxZoom: 6});
+/*  map.locate({setView: true, maxZoom: 6}); */
 }
