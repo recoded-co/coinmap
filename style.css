@@ -39,5 +39,17 @@ a {
   color: #0078A8;
 }
 
-.olPopup {
+#howto {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#howto h1, #howto h2, #howto h3, #howto p {
+  text-align: center;
+}
+
+#howto img {
+  margin-left: auto;
+  margin-right: auto;
 }

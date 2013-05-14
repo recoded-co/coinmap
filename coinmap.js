@@ -22,13 +22,12 @@ function coinmap() {
     maxZoom: 18
   });
 
-
   var map = L.map('map', { center: [0, 0], zoom: 3, layers: [tileOSM] });
 
-  L.control.layers({
+  var layers = L.control.layers({
     "OpenStreetMap": tileOSM,
-    "MapQuest Open": tileMapQuest,
-    "MapQuest Open Aerial": tileMapQuestAerial,
+    "MapQuestOpen": tileMapQuest,
+    "MapQuestOpenAerial": tileMapQuestAerial,
     "Toner": tileToner,
   }).addTo(map);
 
@@ -37,6 +36,8 @@ function coinmap() {
   coinmap_populate(markers);
 
   map.addLayer(markers);
+
+  map.addControl(new L.Control.Permalink({text: 'Permalink', layers: layers, position: "none", useLocation: true}));
 
   map.locate({setView: true, maxZoom: 6});
 }
