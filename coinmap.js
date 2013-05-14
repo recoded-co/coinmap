@@ -37,7 +37,7 @@ function coinmap() {
 
   map.addLayer(markers);
 
-  map.locate({setView: true, maxZoom: 6});
+/*  map.locate({setView: true, maxZoom: 6}); */
 
   map.addControl(new L.Control.Permalink({text: 'Permalink', layers: layers, position: "none", useLocation: true}));
 }
