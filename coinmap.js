@@ -22,7 +22,7 @@ function coinmap() {
     maxZoom: 18
   });
 
-  var map = L.map('map', { center: [0, 0], zoom: 3, layers: [tileOSM] });
+  var map = L.map('map', { center: [0, 0], zoom: 3, layers: [tileOSM], worldCopyJump: true });
 
   var layers = L.control.layers({
     "OpenStreetMap": tileOSM,
