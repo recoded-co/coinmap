@@ -235,4 +235,4 @@ with open(scriptdir + '/progressbar.js', 'w') as f:
     document.getElementById("progressbar_amount").innerHTML = "%s";
     document.getElementById("progressbar").style.width = "%s%%";
 }
-''' % (str(json['total_received']*1.0/100000000),str(max(0.1,json['total_received']*1.0/100000000/500))))
+''' % (str(json['final_balance']*1.0/100000000),str(max(0.1,json['final_balance']*1.0/100000000/500))))
