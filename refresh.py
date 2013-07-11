@@ -225,14 +225,3 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
     f.write('  L.marker([%s, %s], {"title": "%s", icon: icon_%s}).bindPopup("%s").addTo(markers);\n' % (lat, lon, name.encode('utf-8'), icon, popup.encode('utf-8')))
   f.write('  document.getElementById("count").innerHTML = "<b>%d</b>";\n' % cnt);
   f.write('}\n')
-
-f = urllib2.urlopen('http://blockchain.info/rawaddr/1NBq7J2Gz1BnvGc9Lyo94GcMeh5mgk3Dt5')
-json = simplejson.load(f)
-f.close()
-
-with open(scriptdir + '/progressbar.js', 'w') as f:
-    f.write('''function progressbar_update() {
-    document.getElementById("progressbar_amount").innerHTML = "%s";
-    document.getElementById("progressbar").style.width = "%s%%";
-}
-''' % (str(json['final_balance']*1.0/100000000),str(max(0.1,json['final_balance']*1.0/100000000/500))))
