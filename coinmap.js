@@ -41,11 +41,3 @@ function coinmap() {
 
   map.addControl(new L.Control.Permalink({text: 'Permalink', layers: layers, position: "none", useLocation: true}));
 }
-
-function closedialog()
-{
-  var e = document.getElementById('pledge');
-  if (e) {
-    e.parentNode.removeChild(e);
-  }
-}

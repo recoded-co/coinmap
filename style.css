@@ -38,31 +38,3 @@ body {
 a {
   color: #0078A8;
 }
-
-#pledge {
-  font-size: 1em;
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 5px #bbb;
-  padding: 20px;
-  color: #333;
-  z-index: 7;
-  margin-left: auto;
-  margin-right: auto;
-  width: 540px;
-  top: 100px;
-  line-height: 150%;
-}
-
-#pledge h2 {
-  text-align: center;
-}
-
-#pledge p {
-  text-align: justify;
-}
-
-#pledge img {
-  margin-left: 62px;
-  margin-right: 62px;
-}
