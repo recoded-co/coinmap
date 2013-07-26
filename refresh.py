@@ -157,7 +157,11 @@ def determine_icon(tags):
   icon = 'bitcoin'
   for kv in icon_mapping:
     k,v = kv.split(':')
-    if tags.get(k) == v:
+    t = tags.get(k)
+    if not t:
+        continue
+    t = t.split(';')[0]
+    if t == v:
       icon = icon_mapping[kv]
       break
   icon = icon.replace('-', '_')
