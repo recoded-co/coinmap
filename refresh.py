@@ -215,9 +215,15 @@ with open(scriptdir + '/coinmap-data.js', 'w') as f:
       popup += '%s<br/>' % (tags.get('addr:country', ''))
     popup += '<hr/>'
     if 'contact:website' in tags:
-      popup += 'website: <a href=\\"%s\\" target=\\"_blank\\">%s</a><br/>' % (tags['contact:website'], tags['contact:website'])
+      w = tags['contact:website']
+      if not w.startswith('http'):
+        w = 'http://' + w
+      popup += 'website: <a href=\\"%s\\" target=\\"_blank\\">%s</a><br/>' % (w, w)
     elif 'website' in tags:
-      popup += 'website: <a href=\\"%s\\" target=\\"_blank\\">%s</a><br/>' % (tags['website'], tags['website'])
+      w = tags['website']
+      if not w.startswith('http'):
+        w = 'http://' + w
+      popup += 'website: <a href=\\"%s\\" target=\\"_blank\\">%s</a><br/>' % (w, w)
     if 'contact:email' in tags:
       popup += 'email: <a href=\\"mailto:%s\\" target=\\"_blank\\">%s</a><br/>' % (tags['contact:email'], tags['contact:email'])
     elif 'email' in tags:
