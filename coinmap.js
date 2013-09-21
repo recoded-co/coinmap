@@ -10,6 +10,11 @@ function coinmap() {
     maxZoom: 18
   });
 
+  var tileWatercolor = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+    maxZoom: 16
+  });
+
   var tileMapQuest = L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
     subdomains: ['otile1','otile2','otile3','otile4'],
     attribution: 'Map tiles by <a href="http://open.mapquestapi.com/">MapQuest</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
@@ -29,6 +34,7 @@ function coinmap() {
     "MapQuestOpen": tileMapQuest,
     "MapQuestOpenAerial": tileMapQuestAerial,
     "Toner": tileToner,
+    "Watercolor": tileWatercolor,
   }).addTo(map);
 
   var markers = new L.MarkerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 32});
