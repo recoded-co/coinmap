@@ -4,7 +4,8 @@ import urllib
 import urllib2
 import simplejson
 import os
-from lb import public as locals
+from lb import parser as local_bitcoins_parser
+from zipzap import parser as zipzap_parser
 
 icon_mapping = {
 'aeroway:aerodrome': 'transport_airport',
@@ -155,6 +156,7 @@ icon_mapping = {
 'tourism:zoo': 'tourist_zoo',
 'traffic_calming:yes': 'transport_speedbump',
 'local_bitcoins:local_bitcoins': 'local_bitcoins',
+'zipzap:zipzap': 'zipzap'
 }
 
 def determine_icon(tags):
@@ -239,40 +241,15 @@ cnt = 0
 
 with open(scriptdir + '/coinmap-data.js', 'w') as f:
   f.write('function coinmap_populate(markers) {\n')
-  # overpass
-  for e in json['elements']:
-    place = write_elements(f, e)
-    if place:
-        cnt += 1
-
-  # Bitcoin Locals
-  elements = []
-
-  country_codes = locals.countrycodes()
-  for country in country_codes:
-    bl_data = locals.get_local_sell_ads(country)
-    for entry in bl_data[:2]:
-      e = entry['data']
-      j = {
-          'id': e.get('profile', {}).get('id', '-1'),
-          'lat': e.get('lat', None),
-          'lon': e.get('lon', None),
-          'type': 'node',
-          'tags': {
-              'payment:bitcoin': 'yes',
-              'local_bitcoins': 'local_bitcoins',
-              'addr:city': e.get('city', ''),
-              'add:country': e.get('countrycode', ''),
-              'contact:website': 'https://localbitcoins.com/accounts/profile/'
-                                        + e.get('profile', {}).get('username', '')
-          },
-          'website': 'http://localbitcoins.com'
-      }
-      elements.append(j)
-
-  for e in elements:
-    place = write_elements(f, e)
-    if place:
+  data_sources = [
+      json['elements'],
+      local_bitcoins_parser.get_lb_points(),
+      zipzap_parser.get_zipzap_points()
+  ]
+  for source in data_sources:
+    for d in source:
+      place = write_elements(f, d)
+      if place:
         cnt += 1
 
   f.write('  document.getElementById("count").innerHTML = "<b>%d</b>";\n' % cnt);

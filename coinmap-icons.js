@@ -140,3 +140,4 @@ var icon_transport_turning_circle = L.icon({iconUrl: 'icons/transport_turning_ci
 var icon_transport_weir = L.icon({iconUrl: 'icons/transport_weir.n.24.png', iconSize: [24, 24] });
 var icon_transport_zebracrossing = L.icon({iconUrl: 'icons/transport_zebracrossing.n.24.png', iconSize: [24, 24] });
 var icon_local_bitcoins = L.icon({iconUrl:'icons/local_bitcoins.n.24.png', iconSize:[24,24]});
+var icon_zipzap = L.icon({iconUrl:'icons/zipzap.n.24.png', iconSize:[24, 24]});
